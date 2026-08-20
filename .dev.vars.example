@@ -1,0 +1,24 @@
+# Local development secrets. Copy to .dev.vars (gitignored).
+# In production these are set via `wrangler secret put`.
+
+# Set to "true" to bypass Cloudflare Access JWT verification when running
+# `wrangler dev` locally. Never set this in production.
+DEV_AUTH_BYPASS=true
+
+# Optional: only for local `wrangler dev` when custom-domain routing makes the
+# Worker see a non-local HTTP hostname. Never set this in production.
+DEV_AUTH_BYPASS_ALLOW_NONLOCAL_HOST=
+
+# Cloudflare Access — required in production, ignored when DEV_AUTH_BYPASS=true.
+# Get these from the CF Access application configuration once the zone is set up.
+CF_ACCESS_TEAM_DOMAIN=
+CF_ACCESS_AUD=
+
+# HMAC shared secret for the server-to-server lead-ingest route (/s/ingest/leads).
+# In production this is set via `wrangler secret put CRM_INGEST_SECRET`.
+# The calling worker must be configured with the same secret.
+#
+# Locally the value only has to be non-empty — the route returns 500 rather than
+# 401 when the secret is missing, so `npm run test:e2e` fails on setup if you
+# blank this out. The placeholder below is not a real credential.
+CRM_INGEST_SECRET=local-dev-ingest-secret-not-a-real-credential

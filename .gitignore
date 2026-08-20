@@ -1,0 +1,33 @@
+node_modules/
+.wrangler/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+dist/
+admin/dist/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+coverage/
+.vitest-cache/
+playwright-report/
+test-results/
+.playwright-cli/
+output/
+.claude/worktrees/
+
+# Isolated miniflare store for the local demo dataset (npm run shots).
+# Never commit it: it holds the fictional demo rows, not real data.
+.wrangler-demo/
+
+# Screenshot scratch from local tooling.
+.playwright-mcp/
+*.png
+# ...except the committed documentation screenshots: the raw capture archive in
+# docs/, and the curated set actually referenced from README.md / portfolio/*.md.
+!docs/screenshots/*.png
+!docs/screenshots/*.jpg
+!portfolio/screenshots/*.png
+!portfolio/screenshots/*.jpg

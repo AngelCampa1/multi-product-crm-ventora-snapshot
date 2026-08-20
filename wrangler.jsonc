@@ -1,0 +1,61 @@
+{
+  // Ventora CRM — Cloudflare Worker config.
+  // See portfolio/ARCHITECTURE.md for the routing, bindings, and staged-rollout rationale.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ventora-crm",
+  "main": "src/worker.ts",
+  "compatibility_date": "2025-05-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // Production custom domains:
+  // - crm.ventoralabs.com is Access-protected for admin and preview.
+  // - widgets.ventoralabs.com stays public for /w/* embeds.
+  "routes": [
+    { "pattern": "crm.ventoralabs.com", "custom_domain": true },
+    { "pattern": "widgets.ventoralabs.com", "custom_domain": true }
+  ],
+
+  "observability": {
+    "enabled": true
+  },
+
+  // D1: relational store for customers, testimonials, feedback, reviews.
+  // database_id is a placeholder — create your own with:
+  //   wrangler d1 create ventora-crm
+  // and paste the returned id here. Local dev (--local) ignores this value.
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ventora-crm",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+
+  // R2: media bucket for customer avatars / testimonial photos.
+  // Create with: wrangler r2 bucket create ventora-crm-media
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "ventora-crm-media"
+    }
+  ],
+
+  // Static Assets binding: serves the React+Vite admin SPA from admin/dist
+  // at /admin/* and /preview/* (handled by Worker for routing fallback).
+  "assets": {
+    "directory": "./admin/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/*"]
+  },
+
+  // Scheduled trigger: poll review connectors every 6h.
+  // No-op until a connector is configured in admin Settings.
+  "triggers": {
+    "crons": ["0 */6 * * *"]
+  }
+
+  // No KV in v1. Workers Cache API (caches.default) covers edge caching
+  // for /w/v1.js and /w/data/* at zero ongoing cost.
+}

@@ -1,0 +1,13 @@
+* text=auto eol=lf
+*.ts linguist-language=TypeScript
+*.tsx linguist-language=TypeScript
+*.sql text eol=lf
+
+# The documentation screenshots are binary. `text=auto` above happens to detect
+# that correctly today, but say it explicitly rather than trust the heuristic:
+# a PNG run through LF normalisation is silently corrupted.
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff binary
+*.woff2 binary

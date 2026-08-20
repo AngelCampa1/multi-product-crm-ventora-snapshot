@@ -1,0 +1,5 @@
+-- Mirror of migrations/0001_init.sql for IDE awareness / quick reference.
+-- Wrangler applies migrations from /migrations, not from here.
+-- If you modify this file, also update the latest migration.
+--
+-- See migrations/0001_init.sql for the authoritative schema.

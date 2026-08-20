@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "ventora-crm",
+  "main": "src/worker.ts",
+  "compatibility_date": "2025-05-01",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "ventora-crm",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations_phase1"
+    }
+  ]
+}
